@@ -9,8 +9,8 @@ export default function Register({ onRegister, onSwitch }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Send data to the Brain
-            await axios.post('http://localhost:5000/register', {
+            // 👇 UPDATED: Talking to the Cloud Brain now!
+            await axios.post('https://brainvia-backend.onrender.com/register', {
                 email, 
                 password, 
                 role

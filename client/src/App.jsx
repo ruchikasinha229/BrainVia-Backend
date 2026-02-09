@@ -20,7 +20,8 @@ function App() {
 
   const fetchCourses = async () => {
     try {
-        const res = await axios.get('http://localhost:5000/courses');
+        // 👇 UPDATED TO CLOUD URL
+        const res = await axios.get('https://brainvia-backend.onrender.com/courses');
         setCourses(res.data);
     } catch(err) { console.error(err); }
   };
@@ -42,7 +43,8 @@ function App() {
   // 2. User Clicks "Pay ₹500" inside the popup -> We process it
   const processPayment = async () => {
     try {
-        const res = await axios.post('http://localhost:5000/buy', {
+        // 👇 UPDATED TO CLOUD URL
+        const res = await axios.post('https://brainvia-backend.onrender.com/buy', {
             userId: user._id,
             courseId: courseToBuy._id
         });

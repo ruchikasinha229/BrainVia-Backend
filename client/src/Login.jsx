@@ -8,8 +8,8 @@ export default function Login({ onLogin, onSwitch }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Talk to the Brain
-            const res = await axios.post('http://localhost:5000/login', { email, password });
+            // 👇 UPDATED: Talking to the Cloud Brain now!
+            const res = await axios.post('https://brainvia-backend.onrender.com/login', { email, password });
             
             // If Brain says "Success", log them in
             if (res.data.message === "Success") {
@@ -43,7 +43,6 @@ export default function Login({ onLogin, onSwitch }) {
                 </button>
             </form>
             
-            {/* 👇 THIS IS THE MAGIC LINK THAT WAS MISSING 👇 */}
             <p style={{marginTop: '20px'}}>
                 Don't have an account? 
                 <span 
