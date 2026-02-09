@@ -1,0 +1,15 @@
+.dashboard-container { display: flex; height: 90vh; font-family: 'Segoe UI', sans-serif; }
+.sidebar { width: 25%; background: #f7f9fa; border-right: 1px solid #d1d7dc; overflow-y: auto; }
+.sidebar-item { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; }
+.sidebar-item:hover, .sidebar-item.active { background: #e6f2f5; border-left: 4px solid #a435f0; }
+.main-content { width: 75%; padding: 30px; overflow-y: auto; background: #fff; }
+
+.tab-nav { display: flex; border-bottom: 1px solid #ccc; margin-bottom: 20px; }
+.tab-btn { padding: 10px 20px; border: none; background: none; font-size: 1rem; cursor: pointer; color: #666; border-bottom: 3px solid transparent; }
+.tab-btn.active { color: #1c1d1f; border-bottom: 3px solid #1c1d1f; font-weight: bold; }
+
+.video-frame { width: 100%; height: 400px; background: black; border-radius: 8px; margin-bottom: 20px; }
+.quiz-card { background: #fff; padding: 20px; border: 1px solid #ddd; margin-bottom: 15px; border-radius: 8px; }
+.option-btn { display: block; width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ccc; background: #fff; text-align: left; cursor: pointer; }
+.option-btn:hover { background: #f0f0f0; }
+.live-badge { background: #cc0000; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-left: 5px; }
