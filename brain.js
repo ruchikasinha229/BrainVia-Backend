@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 
 // 👇 YOUR DATABASE LINK
-const MONGO_URI = "mongodb+srv://admin:admin123@cluster0.mongodb.net/udemyclone?retryWrites=true&w=majority"; 
+mongoose.connect('mongodb+srv://admin:BrainVia2026@cluster0.s0fpe82.mongodb.net/brainvia?retryWrites=true&w=majority&appName=Cluster0')
 
 mongoose.connect(MONGO_URI)
     .then(() => console.log("✅ Database Connected!"))
