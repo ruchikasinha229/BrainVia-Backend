@@ -6,8 +6,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// 👇 YOUR DATABASE LINK
-mongoose.connect('mongodb+srv://admin:BrainVia2026@cluster0.s0fpe82.mongodb.net/brainvia?retryWrites=true&w=majority&appName=Cluster0')
+// 👇 I FIXED THIS PART FOR YOU:
+const MONGO_URI = 'mongodb+srv://admin:BrainVia2026@cluster0.s0fpe82.mongodb.net/brainvia?retryWrites=true&w=majority&appName=Cluster0';
 
 mongoose.connect(MONGO_URI)
     .then(() => console.log("✅ Database Connected!"))
@@ -42,33 +42,47 @@ app.post('/register', async (req, res) => {
         await newUser.save();
         res.json({ message: "Success" });
     } catch (err) {
-        res.status(400).json({ message: "User already exists" });
+        // If error is code 11000, it's a duplicate user. Otherwise it's a server error.
+        if (err.code === 11000) {
+            res.status(400).json({ message: "User already exists" });
+        } else {
+            console.error("Register Error:", err); // Look at server logs for real error
+            res.status(500).json({ message: "Server Error: Could not register" });
+        }
     }
 });
 
 // Login
 app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email, password });
-    if (user) {
-        res.json({ message: "Success", user });
-    } else {
-        res.status(400).json({ message: "Invalid credentials" });
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email, password });
+        if (user) {
+            res.json({ message: "Success", user });
+        } else {
+            res.status(400).json({ message: "Invalid credentials" });
+        }
+    } catch (err) {
+        res.status(500).json({ message: "Login Error" });
     }
 });
 
-// Add Money (New!)
+// Add Money
 app.post('/add-funds', async (req, res) => {
-    const { email, amount } = req.body;
-    const user = await User.findOneAndUpdate(
-        { email }, 
-        { $inc: { wallet: amount } }, 
-        { new: true }
-    );
-    res.json({ success: true, newBalance: user.wallet });
+    try {
+        const { email, amount } = req.body;
+        const user = await User.findOneAndUpdate(
+            { email }, 
+            { $inc: { wallet: amount } }, 
+            { new: true }
+        );
+        res.json({ success: true, newBalance: user.wallet });
+    } catch (err) {
+        res.status(500).json({ message: "Error adding funds" });
+    }
 });
 
-// Upload Course (New!)
+// Upload Course
 app.post('/add-course', async (req, res) => {
     try {
         const { title, description, price, image, video, instructor } = req.body;
@@ -82,8 +96,12 @@ app.post('/add-course', async (req, res) => {
 
 // Get Courses
 app.get('/courses', async (req, res) => {
-    const courses = await Course.find();
-    res.json(courses);
+    try {
+        const courses = await Course.find();
+        res.json(courses);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching courses" });
+    }
 });
 
 // Start Server
